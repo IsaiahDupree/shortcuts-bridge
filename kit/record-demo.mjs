@@ -27,7 +27,9 @@ const PROMPTS = [
   'Using ShortcutsBridge, what folders are my shortcuts in?',
   'Using ShortcutsBridge, search my shortcuts for focus.',
   'Using ShortcutsBridge, run my Morning Briefing shortcut.',
-  "Using ShortcutsBridge, run Log Water with input 600.",
+  'Yes, run it.',
+  'Now run Log Water with input 600.',
+  'Yes, run it.',
 ];
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -123,16 +125,20 @@ async function sendPrompt(page, text) {
     if ((await userCount(page)) > beforeU) submitted = true;
   }
   log(`sent(${submitted ? 'ok' : 'UNCONFIRMED'}): ${text}`);
-  // Some tool calls prompt an in-chat approval — click it if it appears.
+  // Running a shortcut shows ChatGPT's native approval card ("Allow ChatGPT to
+  // use ShortcutsBridge?"). Click "Allow once" so the tool actually runs, and
+  // keep watching until the card is gone AND streaming is done — otherwise the
+  // capture would move on before the shortcut's output renders.
   const start = Date.now();
-  let approved = false;
-  while (Date.now() - start < 90000) {
-    if (!approved) {
-      const hit = await clickIfPresent(page, ['Always allow', 'Allow', 'Confirm', 'Approve']);
-      if (hit) { log(`clicked "${hit}"`); approved = true; }
-    }
-    if ((await assistantCount(page)) > beforeA) break;
-    await sleep(1500);
+  while (Date.now() - start < 100000) {
+    const hit = await clickIfPresent(page, ['Allow once', 'Always allow', 'Allow', 'Confirm', 'Approve']);
+    if (hit) { log(`clicked "${hit}"`); await sleep(3000); continue; }
+    const busy = await page.evaluate(() =>
+      !!document.querySelector('button[data-testid="stop-button"], button[aria-label*="Stop"]') ||
+      /Allow ChatGPT to use|Allow once/i.test(document.body.innerText)
+    ).catch(() => false);
+    if (!busy && (await assistantCount(page)) > beforeA) break;
+    await sleep(1200);
   }
   await waitDoneStreaming(page);
   await sleep(2500); // hold on the finished reply

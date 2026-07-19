@@ -15,8 +15,8 @@
     "supportUrl": "https://shortcutsbridge.vercel.app/support",
     "privacyUrl": "https://shortcutsbridge.vercel.app/privacy",
     "termsUrl": "https://shortcutsbridge.vercel.app/terms",
-    "demoRecordingUrl": "PENDING",
-    "demoRecordingNote": "REQUIRED by OpenAI. Record after deploy + OAuth + demo seed, host on YouTube (Unlisted is fine), then set this field before running the Submit form.",
+    "demoRecordingUrl": "https://youtu.be/86D6bc2Ov30",
+    "demoRecordingNote": "REQUIRED by OpenAI. YouTube (Unlisted). Demo arc against the reviewer library: list_shortcuts → list_folders → search_shortcuts (focus) → run_shortcut (Morning Briefing, confirmed) → run_shortcut (Log Water, input 600, confirmed) — shows ChatGPT's native Allow card naming the exact action + input.",
     "directoryIcon": "../assets/icon-512.png",
     "composerIcon": "../assets/icon-512.png",
     "commerceLinksOutForPurchases": false
