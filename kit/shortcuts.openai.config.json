@@ -1,0 +1,59 @@
+{
+  "$comment": "ShortcutsBridge listing for the OpenAI plugin directory (7-section form). Same schema as reminders.openai.config.json. FREE connector (no billing). Secrets (reviewer demo password) are NOT stored here; read from ../.env.local by env var name. PENDING before submit: a hosted demo VIDEO (info.demoRecordingUrl) and the domain-verification token (set OPENAI_APPS_CHALLENGE on Vercel when the MCP section issues it).",
+  "mcpUrl": "https://shortcutsbridge.vercel.app/mcp",
+  "authentication": "OAuth",
+  "info": {
+    "name": "ShortcutsBridge",
+    "subtitle": "Run your Apple Shortcuts",
+    "subtitleNote": "Subtitle MUST be 30 characters or fewer (OpenAI validates this). This is 24.",
+    "description": "ShortcutsBridge connects ChatGPT to the Apple Shortcuts on your Mac. Ask what shortcuts you have, search them by name, and — with your confirmation — run one and get its result back in chat: \"Run my Morning Briefing\", \"Run Log Water with 500\", \"What shortcuts are in my Home folder?\". Because a Shortcut can do almost anything (control HomeKit, drive other apps, run scripts, call web APIs), this turns ChatGPT into a trigger for any automation you've already built. Your shortcuts never live on our servers: every action runs on your own Mac through a small open-source agent you install with one command (npx shortcuts-agent), and the relay only carries each request for the seconds it's in flight. ChatGPT always confirms before running a shortcut, and it can only run shortcuts you already created. Open source (MIT) and self-hostable.",
+    "category": "Productivity",
+    "developerIdentity": "Dupree Ops",
+    "developerIdentityNote": "Substring matched against the verified identities in the dropdown (Business — Dupree Ops LLC). Identity verification already completed for the earlier Mac Bridge submissions.",
+    "pluginAuthor": "Isaiah Dupree",
+    "websiteUrl": "https://shortcutsbridge.vercel.app",
+    "supportUrl": "https://shortcutsbridge.vercel.app/support",
+    "privacyUrl": "https://shortcutsbridge.vercel.app/privacy",
+    "termsUrl": "https://shortcutsbridge.vercel.app/terms",
+    "demoRecordingUrl": "PENDING",
+    "demoRecordingNote": "REQUIRED by OpenAI. Record after deploy + OAuth + demo seed, host on YouTube (Unlisted is fine), then set this field before running the Submit form.",
+    "directoryIcon": "../assets/icon-512.png",
+    "composerIcon": "../assets/icon-512.png",
+    "commerceLinksOutForPurchases": false
+  },
+  "domainVerification": {
+    "note": "The MCP section issues a token you must serve at /.well-known/openai-apps-challenge on the MCP hostname. server/api/challenge.js serves it from the OPENAI_APPS_CHALLENGE env var. Set it on Vercel (`vercel env add OPENAI_APPS_CHALLENGE production`), redeploy, then click Verify Domain. The token is a PUBLIC value, not a secret.",
+    "wellKnownPath": "/.well-known/openai-apps-challenge"
+  },
+  "reviewerDemo": {
+    "note": "Reviewers use these to test the app 24/7 with no Mac (demo mode). The account authenticates on the OAuth consent page with email + password; the password lives in ../.env.local, never in this file. Enter the same values verbatim in the Testing section's Test credentials box. The demo account serves a server-side FICTIONAL Shortcuts library (isolated per user); run_shortcut returns realistic canned output, so nothing on a real device is ever touched and every tool is exercisable.",
+    "email": "reviewer@shortcutsbridge.demo",
+    "passwordEnvVar": "DEMO_PASSWORD"
+  },
+  "prompts": [
+    "What shortcuts do I have?",
+    "Run my Morning Briefing shortcut",
+    "Search my shortcuts for focus"
+  ],
+  "promptsNote": "Up to 3 showcase prompts (Prompts section). They render as @Plugin chat bubbles.",
+  "testPrompts": [
+    { "prompt": "What shortcuts do I have?" },
+    { "prompt": "Run my Morning Briefing shortcut" },
+    { "prompt": "Search my shortcuts for focus" }
+  ],
+  "testCases": [
+    { "scenario": "List shortcuts", "prompt": "What shortcuts do I have?", "tools": "list_shortcuts", "expected": "Returns the demo library's 7 shortcuts by name — Morning Briefing, Directions Home, Set a Timer, Start Focus, Daily Standup, Movie Night, Log Water (with a count of 7)." },
+    { "scenario": "List folders", "prompt": "What folders are my shortcuts organized into?", "tools": "list_folders", "expected": "Returns the four folders: Daily, Home, Health, Work." },
+    { "scenario": "Search shortcuts by name", "prompt": "Search my shortcuts for focus", "tools": "search_shortcuts", "expected": "Finds 'Start Focus'. (list_shortcuts with a query does the same filtering.)" },
+    { "scenario": "Run a shortcut (confirmed)", "prompt": "Run my Morning Briefing shortcut", "tools": "run_shortcut", "expected": "ChatGPT confirms first, then run_shortcut returns Morning Briefing's output: a weather line (Cupertino, sunny, ~68°F) plus a 3-event calendar summary (Standup 9:30, Design review 1:00, Dentist 4:15) and the top reminder." },
+    { "scenario": "Run a shortcut with input (confirmed)", "prompt": "Run Log Water with 600", "tools": "run_shortcut", "expected": "ChatGPT confirms, then run_shortcut passes input 600 and returns 'Logged 600 ml. Today: 1600 ml of your 2,000 ml goal.' — showing the input flowed into the shortcut." }
+  ],
+  "testCasesNote": "Testing section requires EXACTLY 5 positive test cases; run against the seeded demo Shortcuts library. run_shortcut returns canned output, so nothing on a real device is touched.",
+  "negativeTestCases": [
+    { "scenario": "A general question about automating a morning routine in the abstract — not a request to run a specific Apple Shortcut the user already has. There is nothing to list or run, so ShortcutsBridge should not trigger.", "prompt": "How should I automate my morning routine?" },
+    { "scenario": "The user refers to a different automation platform. ShortcutsBridge only works with Apple Shortcuts on the user's Mac and should not trigger for Zapier, IFTTT, Make, or similar.", "prompt": "Set up a Zap that posts new emails to Slack." },
+    { "scenario": "A reminders or notes action, not a shortcut. ShortcutsBridge lists and runs Apple Shortcuts only; it should not trigger to add a reminder or write a note.", "prompt": "Add milk to my grocery reminders." }
+  ],
+  "negativeTestCasesNote": "Testing section requires EXACTLY 3 negative test cases (prompts where the app should NOT trigger).",
+  "releaseNotes": "Initial release. ShortcutsBridge connects ChatGPT to your Apple Shortcuts through a small open-source agent that runs on your own Mac — list and search your shortcuts, and (with your confirmation) run one and get its result back in chat, optionally passing text input. Because a Shortcut can drive HomeKit, other apps, scripts, and web APIs, this makes ChatGPT a trigger for any automation you've already built. ChatGPT always confirms before running, and only shortcuts you created can run. Your shortcuts never live on our servers; the cloud piece is only a stateless relay. Open source (MIT) and self-hostable."
+}

@@ -1,0 +1,39 @@
+{
+  "name": "shortcuts-agent",
+  "version": "1.0.0",
+  "description": "Local agent for the ShortcutsBridge MCP connector — lets ChatGPT list and run your Apple Shortcuts on your own Mac.",
+  "type": "module",
+  "bin": {
+    "shortcuts-agent": "./cli.mjs"
+  },
+  "files": [
+    "cli.mjs",
+    "shortcuts-cli.mjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "apple-shortcuts",
+    "shortcuts",
+    "automation",
+    "mcp",
+    "chatgpt",
+    "claude",
+    "macos",
+    "shortcutsbridge",
+    "agent",
+    "launchagent"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IsaiahDupree/shortcuts-bridge",
+    "directory": "agent"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test test-agent-unit.mjs"
+  }
+}

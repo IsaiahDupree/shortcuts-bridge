@@ -1,0 +1,53 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b1f28"/>
+      <stop offset="1" stop-color="#0d0f14"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.42" r="0.6">
+      <stop offset="0" stop-color="#f5b942" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#f5b942" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd375"/>
+      <stop offset="1" stop-color="#f5b942"/>
+    </linearGradient>
+  </defs>
+
+  <!-- tile -->
+  <rect x="16" y="16" width="480" height="480" rx="108" fill="url(#tile)"/>
+  <rect x="16.5" y="16.5" width="479" height="479" rx="107.5" fill="none" stroke="#f5b942" stroke-opacity="0.16" stroke-width="1"/>
+  <circle cx="256" cy="230" r="185" fill="url(#glow)"/>
+
+  <!-- automation flow: a shortcut is a chain of action steps feeding a run button -->
+  <g>
+    <!-- connector line down the flow -->
+    <path d="M182 150 L182 300" stroke="#f5b942" stroke-opacity="0.4" stroke-width="5" stroke-linecap="round" fill="none"/>
+    <!-- step chips -->
+    <rect x="150" y="128" width="150" height="44" rx="14" fill="#20242e" stroke="#f5b942" stroke-opacity="0.55" stroke-width="3"/>
+    <rect x="150" y="196" width="150" height="44" rx="14" fill="#20242e" stroke="#f5b942" stroke-opacity="0.55" stroke-width="3"/>
+    <rect x="150" y="264" width="150" height="44" rx="14" fill="#20242e" stroke="#4ade80" stroke-opacity="0.85" stroke-width="3"/>
+    <!-- step glyph dots on the left of each chip -->
+    <circle cx="182" cy="150" r="9" fill="url(#gold)"/>
+    <circle cx="182" cy="218" r="9" fill="url(#gold)"/>
+    <circle cx="182" cy="286" r="9" fill="#4ade80"/>
+    <!-- little content bars inside chips -->
+    <rect x="206" y="144" width="78" height="7" rx="3.5" fill="#f5b942" fill-opacity="0.55"/>
+    <rect x="206" y="212" width="64" height="7" rx="3.5" fill="#f5b942" fill-opacity="0.55"/>
+    <rect x="206" y="280" width="70" height="7" rx="3.5" fill="#4ade80" fill-opacity="0.65"/>
+  </g>
+
+  <!-- run button: the flow resolves into a big play/run glyph -->
+  <circle cx="336" cy="300" r="66" fill="url(#gold)"/>
+  <circle cx="336" cy="300" r="66" fill="none" stroke="#0d0f14" stroke-opacity="0.25" stroke-width="2"/>
+  <path d="M318 268 L372 300 L318 332 Z" fill="#141821"/>
+  <!-- connector from the last (green) step into the run button -->
+  <path d="M300 286 Q322 292 336 300" stroke="#4ade80" stroke-opacity="0.6" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <!-- bridge deck: the family motif, a hairline span beneath the flow -->
+  <g stroke="#f5b942" stroke-opacity="0.45" stroke-linecap="round" fill="none">
+    <path d="M132 418 L380 418" stroke-width="6"/>
+    <path d="M156 418 L156 396 M206 418 L206 394 M256 418 L256 392 M306 418 L306 394 M356 418 L356 396" stroke-width="3" stroke-opacity="0.32"/>
+    <path d="M132 396 Q256 366 380 396" stroke-width="4" stroke-opacity="0.5"/>
+  </g>
+</svg>
