@@ -1,6 +1,6 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.isaiahdupree/shortcuts-bridge",
+  "name": "io.github.IsaiahDupree/shortcuts-bridge",
   "description": "MCP connector that lets ChatGPT list, search, and run your Apple Shortcuts via a local Mac agent",
   "version": "1.0.0",
   "websiteUrl": "https://shortcutsbridge.vercel.app",
