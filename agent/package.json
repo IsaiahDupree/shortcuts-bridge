@@ -1,7 +1,7 @@
 {
   "name": "shortcuts-agent",
-  "version": "1.0.0",
-  "description": "Local agent for the ShortcutsBridge MCP connector — lets ChatGPT list and run your Apple Shortcuts on your own Mac.",
+  "version": "1.1.0",
+  "description": "Local agent for the ShortcutsBridge MCP connector \u2014 lets ChatGPT list and run your Apple Shortcuts on your own Mac.",
   "type": "module",
   "bin": {
     "shortcuts-agent": "./cli.mjs"
