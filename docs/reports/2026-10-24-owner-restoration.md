@@ -13,3 +13,9 @@
 Browser reconnect, refreshed tool definitions and installed-plugin data reads are being verified separately. Intermittent production RPC timeouts and native macOS permission prompts were observed and are not counted as successful data reads.
 
 A direct real owner OAuth/PKCE → hosted MCP → paired-Mac list_folders read passed (four MCP tools, zero folders on this Mac). No shortcut was run.
+
+## Final installed connection acceptance
+
+Installed ChatGPT reconnection and Refresh tools completed. The installed list_folders tool returned the native empty folder inventory. No Shortcut was executed.
+
+The hosted agent long-poll now caps its wait at 15 seconds, reserving the other half of Vercel’s 30-second limit for authentication and persistent-storage calls. This addresses observed idle-poll 504s; upstream database connectivity can still fail explicitly rather than returning sample data. Existing server unit tests passed after the change.
