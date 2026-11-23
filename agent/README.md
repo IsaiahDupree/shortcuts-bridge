@@ -1,5 +1,9 @@
 # shortcuts-agent
 
+For the current on-demand local MCP path, see the repository's main README.
+The hosted relay and persistent polling agent described below are legacy and
+must remain stopped under the current cloud-compute policy.
+
 The Mac-side half of **ShortcutsBridge** — it lets ChatGPT and Claude list and run your
 **Apple Shortcuts**. This tiny agent runs on your Mac, connects to the ShortcutsBridge relay,
 and does the actual talking to the Shortcuts app (via the built-in macOS `shortcuts` CLI).

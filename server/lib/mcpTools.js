@@ -16,12 +16,14 @@ const asError = (err) => ({
 // Reading the shortcut/folder catalogue is a safe, local, repeatable lookup.
 const RO = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false };
 
-export function buildServer(userId, { demo = false } = {}) {
+export function buildServer(userId, { demo = false, execute } = {}) {
+  if (execute !== undefined && typeof execute !== 'function') throw new TypeError('execute must be a function');
+  if (demo && execute) throw new Error('demo and a local executor cannot be combined');
   const server = new McpServer({ name: 'shortcuts-relay', version: '1.0.0' });
 
   // Demo accounts run against a server-side sample library of shortcuts (no Mac
   // agent needed); real accounts relay to the user's paired Mac.
-  const exec = demo ? (tool, args) => demoExec(userId, tool, args) : (tool, args) => enqueueJob(userId, tool, args);
+  const exec = execute ?? (demo ? (tool, args) => demoExec(userId, tool, args) : (tool, args) => enqueueJob(userId, tool, args));
   const forward = (tool) => async (args) => {
     try {
       return asText(await exec(tool, args ?? {}));

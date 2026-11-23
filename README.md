@@ -9,6 +9,19 @@
 
 </div>
 
+## On-demand local MCP
+
+`node server/local-mcp.mjs` provides the existing Shortcuts tools over local
+stdio to a trusted MCP client after installing server dependencies locally
+(`cd server && npm ci`). The client starts it when needed; there is no hosted
+relay, database, background agent, or polling in this path. A shortcut can send
+messages, call paid services, or change data: use only trusted clients and run
+a shortcut only when the owner has authorized its actual effects. Tool
+annotations and the existing instruction to confirm the specific shortcut
+remain in place; clients are responsible for honoring them. This is not an
+HTTP endpoint and does not restore the hosted ChatGPT connector. The hosted
+setup below is legacy and must remain stopped under the cloud-compute policy.
+
 ShortcutsBridge is a [Model Context Protocol](https://modelcontextprotocol.io) (MCP) connector that lets ChatGPT list, search, and **run** your **Apple Shortcuts**. Reads execute locally and requested results pass through the authenticated relay — every action runs on **your own Mac** through a tiny local agent. The cloud piece is only a stateless relay that shuttles requests between ChatGPT and your Mac.
 
 ```
